@@ -1,4 +1,4 @@
-package com.reglus.backend.model.entities;
+package com.reglus.backend.model.entities.users;
 
 import jakarta.persistence.*;
 import com.reglus.backend.model.enums.SocialRelationship;

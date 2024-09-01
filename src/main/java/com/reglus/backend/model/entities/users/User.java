@@ -1,6 +1,5 @@
-package com.reglus.backend.model.entities;
+package com.reglus.backend.model.entities.users;
 
-import com.reglus.backend.model.enums.*;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
