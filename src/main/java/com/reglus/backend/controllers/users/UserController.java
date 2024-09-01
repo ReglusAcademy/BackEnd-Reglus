@@ -20,8 +20,6 @@ public class UserController {
     @Autowired
     private EducatorRepository educatorRepository;
 
-
-    // Get all users
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
         try {
@@ -35,7 +33,6 @@ public class UserController {
         }
     }
 
-    // Get user by ID
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable("id") Long id) {
         Optional<User> userData = userRepository.findById(id);
@@ -47,7 +44,6 @@ public class UserController {
         }
     }
 
-    // Delete user by ID
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteUser(@PathVariable("id") Long id) {
         try {
@@ -58,7 +54,6 @@ public class UserController {
         }
     }
 
-    // Get user by email
     @GetMapping("/email/{email}")
     public ResponseEntity<User> getUserByEmail(@PathVariable("email") String email) {
         Optional<User> userData = userRepository.findByEmail(email);

@@ -26,7 +26,6 @@ public class StudentController {
     @PostMapping
     public ResponseEntity<?> createStudent(@RequestBody StudentRequest studentRequest) {
         try {
-            // Criação do usuário
             User user = new User();
             user.setUserType(UserType.STUDENT);
             user.setEmail(studentRequest.getEmail());
@@ -39,7 +38,6 @@ public class StudentController {
             user.setInstituteName(studentRequest.getInstituteName());
             userRepository.save(user);
 
-            // Criação do estudante
             Student student = new Student();
             student.setUser(user);
             student.setState(studentRequest.getState());
@@ -53,7 +51,6 @@ public class StudentController {
         }
     }
 
-    // Buscar todos os estudantes
     @GetMapping
     public ResponseEntity<List<Student>> getAllStudents() {
         try {
@@ -67,7 +64,6 @@ public class StudentController {
         }
     }
 
-    // Buscar um estudante pelo ID
     @GetMapping("/{id}")
     public ResponseEntity<Student> getStudentById(@PathVariable("id") Long id) {
         Optional<Student> studentData = studentRepository.findById(id);
@@ -82,7 +78,6 @@ public class StudentController {
     @PutMapping("/{id}")
     public ResponseEntity<?> updateStudent(@PathVariable Long id, @RequestBody StudentRequest studentRequest) {
         try {
-            // Encontre o estudante pelo ID
             Optional<Student> optionalStudent = studentRepository.findById(id);
             if (!optionalStudent.isPresent()) {
                 return new ResponseEntity<>("Student not found", HttpStatus.NOT_FOUND);
@@ -90,7 +85,6 @@ public class StudentController {
 
             Student student = optionalStudent.get();
 
-            // Verifique se o usuário existe e atribua ao estudante
             Optional<User> optionalUser = userRepository.findById(student.getUser().getUserId());
             if (!optionalUser.isPresent()) {
                 return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
@@ -98,7 +92,6 @@ public class StudentController {
 
             User user = optionalUser.get();
 
-            // Atualize as informações do usuário
             user.setEmail(studentRequest.getEmail());
             user.setPasswordHash(studentRequest.getPasswordHash());
             user.setName(studentRequest.getName());
@@ -109,8 +102,7 @@ public class StudentController {
             user.setInstituteName(studentRequest.getInstituteName());
             userRepository.save(user);
 
-            // Atualize as informações do estudante
-            student.setUser(user); // Certifique-se de que o usuário está sendo atribuído
+            student.setUser(user);
             student.setState(studentRequest.getState());
             student.setCity(studentRequest.getCity());
             student.setFinalObservations(studentRequest.getFinalObservations());
@@ -122,7 +114,6 @@ public class StudentController {
         }
     }
 
-    // Deletar um estudante pelo ID
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteStudent(@PathVariable("id") Long id) {
         try {
@@ -132,10 +123,7 @@ public class StudentController {
                 Student student = studentData.get();
                 User user = student.getUser();
 
-                // Deleta primeiro o estudante
                 studentRepository.deleteById(id);
-
-                // Deleta o usuário correspondente
                 userRepository.delete(user);
 
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);

@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,12 +22,9 @@ public class EducatorController {
     @Autowired
     private EducatorRepository educatorRepository;
 
-
-    // Create a new educator
     @PostMapping
     public ResponseEntity<?> createEducator(@RequestBody EducatorRequest educatorRequest) {
         try {
-            // Create User
             User user = new User();
             user.setUserType(educatorRequest.getUserType());
             user.setEmail(educatorRequest.getEmail());
@@ -41,7 +37,6 @@ public class EducatorController {
             user.setInstituteName(educatorRequest.getInstituteName());
             userRepository.save(user);
 
-            // Create Educator
             Educator educator = new Educator();
             educator.setUser(user);
             educator.setExperienceYears(educatorRequest.getExperienceYears());
@@ -54,7 +49,6 @@ public class EducatorController {
         }
     }
 
-    // Get all educators
     @GetMapping
     public ResponseEntity<List<Educator>> getAllEducators() {
         try {
@@ -68,7 +62,6 @@ public class EducatorController {
         }
     }
 
-    // Get educator by ID
     @GetMapping("/{id}")
     public ResponseEntity<Educator> getEducatorById(@PathVariable("id") Long id) {
         Optional<Educator> educatorData = educatorRepository.findById(id);
@@ -80,17 +73,14 @@ public class EducatorController {
         }
     }
 
-    // Update educator by ID
     @PutMapping("/{id}")
     public ResponseEntity<?> updateEducator(@PathVariable("id") Long id, @RequestBody EducatorRequest educatorRequest) {
         try {
-            // Encontre o Educator pelo ID
             Optional<Educator> educatorData = educatorRepository.findById(id);
 
             if (educatorData.isPresent()) {
                 Educator educator = educatorData.get();
 
-                // Verifique se o usuário existe e atribua ao Educator
                 Optional<User> optionalUser = userRepository.findById(educator.getUser().getUserId());
                 if (!optionalUser.isPresent()) {
                     return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
@@ -98,7 +88,6 @@ public class EducatorController {
 
                 User user = optionalUser.get();
 
-                // Atualize as informações do usuário
                 user.setUserType(educatorRequest.getUserType());
                 user.setEmail(educatorRequest.getEmail());
                 user.setPasswordHash(educatorRequest.getPasswordHash());
@@ -110,8 +99,7 @@ public class EducatorController {
                 user.setInstituteName(educatorRequest.getInstituteName());
                 userRepository.save(user);
 
-                // Atualize as informações do Educator
-                educator.setUser(user); // Certifique-se de que o usuário está sendo atribuído
+                educator.setUser(user);
                 educator.setExperienceYears(educatorRequest.getExperienceYears());
                 educator.setBio(educatorRequest.getBio());
                 educatorRepository.save(educator);
@@ -125,8 +113,6 @@ public class EducatorController {
         }
     }
 
-
-    // Delete educator and corresponding user by ID
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteEducator(@PathVariable("id") Long id) {
         try {
@@ -136,10 +122,7 @@ public class EducatorController {
                 Educator educator = educatorData.get();
                 User user = educator.getUser();
 
-                // Delete educator first
                 educatorRepository.deleteById(id);
-
-                // Delete corresponding user
                 userRepository.delete(user);
 
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
