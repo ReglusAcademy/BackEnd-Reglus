@@ -24,7 +24,58 @@ public class HealthWellbeing {
 
     @Enumerated(EnumType.STRING)
     private SleepHours sleepHours;
+
+    // Getters and Setters
+    public Long getHealthId() {
+        return healthId;
+    }
+
+    public void setHealthId(Long healthId) {
+        this.healthId = healthId;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public String getHealthCondition() {
+        return healthCondition;
+    }
+
+    public void setHealthCondition(String healthCondition) {
+        this.healthCondition = healthCondition;
+    }
+
+    public String getPhysicalActivity() {
+        return physicalActivity;
+    }
+
+    public void setPhysicalActivity(String physicalActivity) {
+        this.physicalActivity = physicalActivity;
+    }
+
+    public DietaryEvaluation getDietaryEvaluation() {
+        return dietaryEvaluation;
+    }
+
+    public void setDietaryEvaluation(DietaryEvaluation dietaryEvaluation) {
+        this.dietaryEvaluation = dietaryEvaluation;
+    }
+
+    public SleepHours getSleepHours() {
+        return sleepHours;
+    }
+
+    public void setSleepHours(SleepHours sleepHours) {
+        this.sleepHours = sleepHours;
+    }
 }
+
+
 
 enum DietaryEvaluation {
     MUITO_SAUDAVEL, SAUDAVEL, REGULAR, POUCO_SAUDAVEL, NADA_SAUDAVEL

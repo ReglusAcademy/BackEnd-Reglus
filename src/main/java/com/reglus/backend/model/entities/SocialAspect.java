@@ -24,6 +24,55 @@ public class SocialAspect {
 
     @Enumerated(EnumType.STRING)
     private Relationship relationshipWithFamily;
+
+    // Getters and Setters
+    public Long getSocialId() {
+        return socialId;
+    }
+
+    public void setSocialId(Long socialId) {
+        this.socialId = socialId;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public String getLivingWith() {
+        return livingWith;
+    }
+
+    public void setLivingWith(String livingWith) {
+        this.livingWith = livingWith;
+    }
+
+    public Relationship getRelationshipWithClassmates() {
+        return relationshipWithClassmates;
+    }
+
+    public void setRelationshipWithClassmates(Relationship relationshipWithClassmates) {
+        this.relationshipWithClassmates = relationshipWithClassmates;
+    }
+
+    public Relationship getRelationshipWithTeachers() {
+        return relationshipWithTeachers;
+    }
+
+    public void setRelationshipWithTeachers(Relationship relationshipWithTeachers) {
+        this.relationshipWithTeachers = relationshipWithTeachers;
+    }
+
+    public Relationship getRelationshipWithFamily() {
+        return relationshipWithFamily;
+    }
+
+    public void setRelationshipWithFamily(Relationship relationshipWithFamily) {
+        this.relationshipWithFamily = relationshipWithFamily;
+    }
 }
 
 enum Relationship {

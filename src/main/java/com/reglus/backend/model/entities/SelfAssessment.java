@@ -21,6 +21,47 @@ public class SelfAssessment {
 
     @Column(length = 255)
     private String improvementAreas;
+
+    // Getters and Setters
+    public Long getAssessmentId() {
+        return assessmentId;
+    }
+
+    public void setAssessmentId(Long assessmentId) {
+        this.assessmentId = assessmentId;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public PerformanceEvaluation getPerformanceEvaluation() {
+        return performanceEvaluation;
+    }
+
+    public void setPerformanceEvaluation(PerformanceEvaluation performanceEvaluation) {
+        this.performanceEvaluation = performanceEvaluation;
+    }
+
+    public String getStrengths() {
+        return strengths;
+    }
+
+    public void setStrengths(String strengths) {
+        this.strengths = strengths;
+    }
+
+    public String getImprovementAreas() {
+        return improvementAreas;
+    }
+
+    public void setImprovementAreas(String improvementAreas) {
+        this.improvementAreas = improvementAreas;
+    }
 }
 
 enum PerformanceEvaluation {
