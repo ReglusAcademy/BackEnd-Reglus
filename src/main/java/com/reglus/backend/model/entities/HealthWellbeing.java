@@ -1,5 +1,7 @@
 package com.reglus.backend.model.entities;
 
+import com.reglus.backend.model.enums.HealthDietaryEvaluation;
+import com.reglus.backend.model.enums.HealthSleepHours;
 import jakarta.persistence.*;
 
 @Entity
@@ -20,10 +22,10 @@ public class HealthWellbeing {
     private String physicalActivity;
 
     @Enumerated(EnumType.STRING)
-    private DietaryEvaluation dietaryEvaluation;
+    private HealthDietaryEvaluation dietaryEvaluation;
 
     @Enumerated(EnumType.STRING)
-    private SleepHours sleepHours;
+    private HealthSleepHours sleepHours;
 
     // Getters and Setters
     public Long getHealthId() {
@@ -58,29 +60,19 @@ public class HealthWellbeing {
         this.physicalActivity = physicalActivity;
     }
 
-    public DietaryEvaluation getDietaryEvaluation() {
+    public HealthDietaryEvaluation getDietaryEvaluation() {
         return dietaryEvaluation;
     }
 
-    public void setDietaryEvaluation(DietaryEvaluation dietaryEvaluation) {
+    public void setDietaryEvaluation(HealthDietaryEvaluation dietaryEvaluation) {
         this.dietaryEvaluation = dietaryEvaluation;
     }
 
-    public SleepHours getSleepHours() {
+    public HealthSleepHours getSleepHours() {
         return sleepHours;
     }
 
-    public void setSleepHours(SleepHours sleepHours) {
+    public void setSleepHours(HealthSleepHours sleepHours) {
         this.sleepHours = sleepHours;
     }
-}
-
-
-
-enum DietaryEvaluation {
-    MUITO_SAUDAVEL, SAUDAVEL, REGULAR, POUCO_SAUDAVEL, NADA_SAUDAVEL
-}
-
-enum SleepHours {
-    MENOS_DE_6_HORAS, SEIS_SETE_HORAS, SETE_OITO_HORAS, OITO_NOVE_HORAS, MAIS_DE_9_HORAS
 }

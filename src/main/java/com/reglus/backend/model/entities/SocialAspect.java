@@ -1,6 +1,7 @@
 package com.reglus.backend.model.entities;
 
 import jakarta.persistence.*;
+import com.reglus.backend.model.enums.SocialRelationship;
 
 @Entity
 @Table(name = "social_aspects")
@@ -17,13 +18,13 @@ public class SocialAspect {
     private String livingWith;
 
     @Enumerated(EnumType.STRING)
-    private Relationship relationshipWithClassmates;
+    private SocialRelationship relationshipWithClassmates;
 
     @Enumerated(EnumType.STRING)
-    private Relationship relationshipWithTeachers;
+    private SocialRelationship relationshipWithTeachers;
 
     @Enumerated(EnumType.STRING)
-    private Relationship relationshipWithFamily;
+    private SocialRelationship relationshipWithFamily;
 
     // Getters and Setters
     public Long getSocialId() {
@@ -50,31 +51,27 @@ public class SocialAspect {
         this.livingWith = livingWith;
     }
 
-    public Relationship getRelationshipWithClassmates() {
+    public SocialRelationship getRelationshipWithClassmates() {
         return relationshipWithClassmates;
     }
 
-    public void setRelationshipWithClassmates(Relationship relationshipWithClassmates) {
+    public void setRelationshipWithClassmates(SocialRelationship relationshipWithClassmates) {
         this.relationshipWithClassmates = relationshipWithClassmates;
     }
 
-    public Relationship getRelationshipWithTeachers() {
+    public SocialRelationship getRelationshipWithTeachers() {
         return relationshipWithTeachers;
     }
 
-    public void setRelationshipWithTeachers(Relationship relationshipWithTeachers) {
+    public void setRelationshipWithTeachers(SocialRelationship relationshipWithTeachers) {
         this.relationshipWithTeachers = relationshipWithTeachers;
     }
 
-    public Relationship getRelationshipWithFamily() {
+    public SocialRelationship getRelationshipWithFamily() {
         return relationshipWithFamily;
     }
 
-    public void setRelationshipWithFamily(Relationship relationshipWithFamily) {
+    public void setRelationshipWithFamily(SocialRelationship relationshipWithFamily) {
         this.relationshipWithFamily = relationshipWithFamily;
     }
-}
-
-enum Relationship {
-    MUITO_BOA, BOA, REGULAR, RUIM, MUITO_RUIM
 }

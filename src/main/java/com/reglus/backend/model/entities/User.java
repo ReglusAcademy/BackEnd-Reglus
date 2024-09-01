@@ -1,8 +1,10 @@
 package com.reglus.backend.model.entities;
 
+import com.reglus.backend.model.enums.*;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import com.reglus.backend.model.enums.UserType;
 
 @Entity
 @Table(name = "users")
@@ -142,8 +144,4 @@ public class User {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
-}
-
-enum UserType {
-    EDUCATOR, STUDENT
 }

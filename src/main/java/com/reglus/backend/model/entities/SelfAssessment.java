@@ -1,6 +1,7 @@
 package com.reglus.backend.model.entities;
 
 import jakarta.persistence.*;
+import com.reglus.backend.model.enums.SelfPerformanceEvaluation;
 
 @Entity
 @Table(name = "self_assessment")
@@ -14,7 +15,7 @@ public class SelfAssessment {
     private Student student;
 
     @Enumerated(EnumType.STRING)
-    private PerformanceEvaluation performanceEvaluation;
+    private SelfPerformanceEvaluation performanceEvaluation;
 
     @Column(length = 255)
     private String strengths;
@@ -39,11 +40,11 @@ public class SelfAssessment {
         this.student = student;
     }
 
-    public PerformanceEvaluation getPerformanceEvaluation() {
+    public SelfPerformanceEvaluation getPerformanceEvaluation() {
         return performanceEvaluation;
     }
 
-    public void setPerformanceEvaluation(PerformanceEvaluation performanceEvaluation) {
+    public void setPerformanceEvaluation(SelfPerformanceEvaluation performanceEvaluation) {
         this.performanceEvaluation = performanceEvaluation;
     }
 
@@ -64,6 +65,3 @@ public class SelfAssessment {
     }
 }
 
-enum PerformanceEvaluation {
-    MUITO_BOA, BOA, REGULAR, RUIM, MUITO_RUIM
-}

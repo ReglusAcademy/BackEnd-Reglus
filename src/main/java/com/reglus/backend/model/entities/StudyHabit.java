@@ -1,6 +1,7 @@
 package com.reglus.backend.model.entities;
 
 import jakarta.persistence.*;
+import com.reglus.backend.model.enums.StudyHoursPerDay;
 
 @Entity
 @Table(name = "study_habits")
@@ -73,8 +74,4 @@ public class StudyHabit {
     public void setStudyPlan(String studyPlan) {
         this.studyPlan = studyPlan;
     }
-}
-
-enum StudyHoursPerDay {
-    MENOS_DE_1_HORA, UMA_DUAS_HORAS, DUAS_TRES_HORAS, MAIS_DE_3_HORAS
 }
