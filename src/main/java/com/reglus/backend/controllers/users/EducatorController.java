@@ -2,7 +2,7 @@ package com.reglus.backend.controllers.users;
 
 import com.reglus.backend.model.entities.users.User;
 import com.reglus.backend.model.entities.users.Educator;
-import com.reglus.backend.model.enums.UserType;
+import com.reglus.backend.model.entities.users.EducatorRequest;
 import com.reglus.backend.repositories.EducatorRepository;
 import com.reglus.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,33 +82,49 @@ public class EducatorController {
 
     // Update educator by ID
     @PutMapping("/{id}")
-    public ResponseEntity<Educator> updateEducator(@PathVariable("id") Long id, @RequestBody EducatorRequest educatorRequest) {
-        Optional<Educator> educatorData = educatorRepository.findById(id);
+    public ResponseEntity<?> updateEducator(@PathVariable("id") Long id, @RequestBody EducatorRequest educatorRequest) {
+        try {
+            // Encontre o Educator pelo ID
+            Optional<Educator> educatorData = educatorRepository.findById(id);
 
-        if (educatorData.isPresent()) {
-            Educator educator = educatorData.get();
-            User user = educator.getUser();
+            if (educatorData.isPresent()) {
+                Educator educator = educatorData.get();
 
-            user.setUserType(educatorRequest.getUserType());
-            user.setEmail(educatorRequest.getEmail());
-            user.setPasswordHash(educatorRequest.getPasswordHash());
-            user.setName(educatorRequest.getName());
-            user.setDateBirth(educatorRequest.getDateBirth());
-            user.setGender(educatorRequest.getGender());
-            user.setDisability(educatorRequest.getDisability());
-            user.setEducationLevel(educatorRequest.getEducationLevel());
-            user.setInstituteName(educatorRequest.getInstituteName());
-            userRepository.save(user);
+                // Verifique se o usuário existe e atribua ao Educator
+                Optional<User> optionalUser = userRepository.findById(educator.getUser().getUserId());
+                if (!optionalUser.isPresent()) {
+                    return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+                }
 
-            educator.setExperienceYears(educatorRequest.getExperienceYears());
-            educator.setBio(educatorRequest.getBio());
-            educatorRepository.save(educator);
+                User user = optionalUser.get();
 
-            return new ResponseEntity<>(educator, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                // Atualize as informações do usuário
+                user.setUserType(educatorRequest.getUserType());
+                user.setEmail(educatorRequest.getEmail());
+                user.setPasswordHash(educatorRequest.getPasswordHash());
+                user.setName(educatorRequest.getName());
+                user.setDateBirth(educatorRequest.getDateBirth());
+                user.setGender(educatorRequest.getGender());
+                user.setDisability(educatorRequest.getDisability());
+                user.setEducationLevel(educatorRequest.getEducationLevel());
+                user.setInstituteName(educatorRequest.getInstituteName());
+                userRepository.save(user);
+
+                // Atualize as informações do Educator
+                educator.setUser(user); // Certifique-se de que o usuário está sendo atribuído
+                educator.setExperienceYears(educatorRequest.getExperienceYears());
+                educator.setBio(educatorRequest.getBio());
+                educatorRepository.save(educator);
+
+                return new ResponseEntity<>(educator, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Educator not found", HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
 
     // Delete educator and corresponding user by ID
     @DeleteMapping("/{id}")
@@ -135,107 +151,4 @@ public class EducatorController {
         }
     }
 
-    // Request DTO
-    public static class EducatorRequest {
-        private UserType userType;
-        private String email;
-        private String passwordHash;
-        private String name;
-        private LocalDate dateBirth;
-        private String gender;
-        private String disability;
-        private String educationLevel;
-        private String instituteName;
-        private String experienceYears;
-        private String bio;
-
-        // Getters and Setters
-        public UserType getUserType() {
-            return userType;
-        }
-
-        public void setUserType(UserType userType) {
-            this.userType = userType;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public String getPasswordHash() {
-            return passwordHash;
-        }
-
-        public void setPasswordHash(String passwordHash) {
-            this.passwordHash = passwordHash;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public LocalDate getDateBirth() {
-            return dateBirth;
-        }
-
-        public void setDateBirth(LocalDate dateBirth) {
-            this.dateBirth = dateBirth;
-        }
-
-        public String getGender() {
-            return gender;
-        }
-
-        public void setGender(String gender) {
-            this.gender = gender;
-        }
-
-        public String getDisability() {
-            return disability;
-        }
-
-        public void setDisability(String disability) {
-            this.disability = disability;
-        }
-
-        public String getEducationLevel() {
-            return educationLevel;
-        }
-
-        public void setEducationLevel(String educationLevel) {
-            this.educationLevel = educationLevel;
-        }
-
-        public String getInstituteName() {
-            return instituteName;
-        }
-
-        public void setInstituteName(String instituteName) {
-            this.instituteName = instituteName;
-        }
-
-        public String getExperienceYears() {
-            return experienceYears;
-        }
-
-        public void setExperienceYears(String experienceYears) {
-            this.experienceYears = experienceYears;
-        }
-
-        public String getBio() {
-            return bio;
-        }
-
-        public void setBio(String bio) {
-            this.bio = bio;
-        }
-    }
 }
