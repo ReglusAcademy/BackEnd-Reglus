@@ -20,6 +20,17 @@ public class Educator {
     @Column(length = 500)
     private String bio;
 
+    // Construtor
+    public Educator() {
+
+    }
+
+    public Educator(User user, String experienceYears, String bio) {
+        this.user = user;
+        this.experienceYears = experienceYears;
+        this.bio = bio;
+    }
+
     // Getters and Setters
     public Long getEducatorId() {
         return educatorId;
