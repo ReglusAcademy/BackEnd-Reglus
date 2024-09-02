@@ -1,5 +1,6 @@
 package com.reglus.backend.model.entities.users;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,6 +16,7 @@ public class Student {
 
     @ManyToOne
     @JoinColumn(name = "social_id")
+    @JsonManagedReference
     private SocialAspect socialAspect;
 
     @ManyToOne

@@ -1,48 +1,20 @@
 package com.reglus.backend.model.entities.users;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.*;
 import com.reglus.backend.model.enums.SocialRelationship;
 
-@Entity
-@Table(name = "social_aspects")
-public class SocialAspect {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long socialId;
-
-    @OneToOne
-    @JoinColumn(name = "student_id", nullable = false)
-    @JsonBackReference
-    private Student student;
-
-    @Column(length = 255)
+public class SocialAspectRequest {
+    private Long studentId;
     private String livingWith;
-
-    @Enumerated(EnumType.STRING)
     private SocialRelationship relationshipWithClassmates;
-
-    @Enumerated(EnumType.STRING)
     private SocialRelationship relationshipWithTeachers;
-
-    @Enumerated(EnumType.STRING)
     private SocialRelationship relationshipWithFamily;
 
-    // Getters and Setters
-    public Long getSocialId() {
-        return socialId;
+    public Long getStudentId() {
+        return studentId;
     }
 
-    public void setSocialId(Long socialId) {
-        this.socialId = socialId;
-    }
-
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
     }
 
     public String getLivingWith() {
