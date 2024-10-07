@@ -9,12 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/educators")
+@CrossOrigin(origins = "http://localhost:8081") // Substitua pela URL correta
 public class EducatorController {
     @Autowired
     private UserRepository userRepository;
