@@ -1,7 +1,7 @@
 package com.reglus.backend.controllers.users;
 
-import com.reglus.backend.model.entities.users.SocialAspect;
-import com.reglus.backend.model.entities.users.SocialAspectRequest;
+import com.reglus.backend.model.entities.users.smf.SocialAspect;
+import com.reglus.backend.model.entities.users.smf.SocialAspectRequest;
 import com.reglus.backend.model.entities.users.Student;
 import com.reglus.backend.repositories.SocialAspectRepository;
 import com.reglus.backend.repositories.StudentRepository;
@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/social-aspects")
+@CrossOrigin(origins = "*")
 public class SocialAspectController {
     @Autowired
     private SocialAspectRepository socialAspectRepository;
@@ -22,6 +23,7 @@ public class SocialAspectController {
     @Autowired
     private StudentRepository studentRepository;
 
+    /*
     @PostMapping
     public ResponseEntity<?> createSocialAspect(@RequestBody SocialAspectRequest socialAspectRequest) {
         try {
@@ -47,6 +49,7 @@ public class SocialAspectController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+    */
 
     @GetMapping
     public ResponseEntity<List<SocialAspect>> getAllSocialAspects() {
@@ -71,15 +74,24 @@ public class SocialAspectController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SocialAspect> updateSocialAspect(@PathVariable("id") Long id, @RequestBody SocialAspect socialAspect) {
+    public ResponseEntity<SocialAspect> updateSocialAspect(@PathVariable("id") Long id, @RequestBody SocialAspectRequest socialAspectRequest) {
         Optional<SocialAspect> socialAspectData = socialAspectRepository.findById(id);
 
         if (socialAspectData.isPresent()) {
             SocialAspect existingSocialAspect = socialAspectData.get();
-            existingSocialAspect.setLivingWith(socialAspect.getLivingWith());
-            existingSocialAspect.setRelationshipWithClassmates(socialAspect.getRelationshipWithClassmates());
-            existingSocialAspect.setRelationshipWithTeachers(socialAspect.getRelationshipWithTeachers());
-            existingSocialAspect.setRelationshipWithFamily(socialAspect.getRelationshipWithFamily());
+
+            if (socialAspectRequest.getLivingWith() != null) {
+                existingSocialAspect.setLivingWith(socialAspectRequest.getLivingWith());
+            }
+            if (socialAspectRequest.getRelationshipWithClassmates() != null) {
+                existingSocialAspect.setRelationshipWithClassmates(socialAspectRequest.getRelationshipWithClassmates());
+            }
+            if (socialAspectRequest.getRelationshipWithTeachers() != null) {
+                existingSocialAspect.setRelationshipWithTeachers(socialAspectRequest.getRelationshipWithTeachers());
+            }
+            if (socialAspectRequest.getRelationshipWithFamily() != null) {
+                existingSocialAspect.setRelationshipWithFamily(socialAspectRequest.getRelationshipWithFamily());
+            }
 
             SocialAspect updatedSocialAspect = socialAspectRepository.save(existingSocialAspect);
             return new ResponseEntity<>(updatedSocialAspect, HttpStatus.OK);
@@ -87,30 +99,4 @@ public class SocialAspectController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteSocialAspect(@PathVariable("id") Long id) {
-        try {
-            Optional<SocialAspect> socialAspectData = socialAspectRepository.findById(id);
-
-            if (socialAspectData.isPresent()) {
-                SocialAspect socialAspect = socialAspectData.get();
-                Student student = socialAspect.getStudent();
-
-                if (student != null) {
-                    student.setSocialAspect(null);
-                    studentRepository.save(student);
-                }
-
-                socialAspectRepository.deleteById(id);
-
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
 }

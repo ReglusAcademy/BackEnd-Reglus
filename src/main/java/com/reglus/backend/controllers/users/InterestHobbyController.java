@@ -1,6 +1,6 @@
 package com.reglus.backend.controllers.users;
-import com.reglus.backend.model.entities.users.InterestHobby;
-import com.reglus.backend.model.entities.users.InterestHobbyRequest;
+import com.reglus.backend.model.entities.users.smf.InterestHobby;
+import com.reglus.backend.model.entities.users.smf.InterestHobbyRequest;
 import com.reglus.backend.model.entities.users.Student;
 import com.reglus.backend.repositories.InterestHobbyRepository;
 import com.reglus.backend.repositories.StudentRepository;
@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/interest-hobbies")
+@CrossOrigin(origins = "*")
 public class InterestHobbyController {
 
     @Autowired
@@ -22,6 +23,7 @@ public class InterestHobbyController {
     @Autowired
     private StudentRepository studentRepository;
 
+    /*
     @PostMapping
     public ResponseEntity<?> createInterestHobby(@RequestBody InterestHobbyRequest interestHobbyRequest) {
         try {
@@ -45,6 +47,7 @@ public class InterestHobbyController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+    */
 
     @GetMapping
     public ResponseEntity<List<InterestHobby>> getAllInterestHobbies() {

@@ -1,23 +1,13 @@
-package com.reglus.backend.model.entities.users;
+package com.reglus.backend.model.entities.users.smf;
 
 import com.reglus.backend.model.enums.HealthDietaryEvaluation;
 import com.reglus.backend.model.enums.HealthSleepHours;
 
 public class HealthWellbeingRequest {
-    private Long studentId; // Relacionamento com o estudante
     private String healthCondition; // Condição de saúde
     private String physicalActivity; // Atividades físicas
     private HealthDietaryEvaluation dietaryEvaluation; // Avaliação dietética
     private HealthSleepHours sleepHours; // Horas de sono
-
-    // Getters e Setters
-    public Long getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(Long studentId) {
-        this.studentId = studentId;
-    }
 
     public String getHealthCondition() {
         return healthCondition;

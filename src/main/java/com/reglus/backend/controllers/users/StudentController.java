@@ -3,6 +3,8 @@ package com.reglus.backend.controllers.users;
 import com.reglus.backend.model.entities.users.Student;
 import com.reglus.backend.model.entities.users.User;
 import com.reglus.backend.model.entities.users.StudentRequest;
+import com.reglus.backend.model.entities.users.smf.*;
+import com.reglus.backend.repositories.SocialAspectRepository;
 import com.reglus.backend.model.enums.UserType;
 import com.reglus.backend.repositories.StudentRepository;
 import com.reglus.backend.repositories.UserRepository;
@@ -16,12 +18,15 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/students")
+@CrossOrigin(origins = "*")
 public class StudentController {
     @Autowired
     private StudentRepository studentRepository;
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private SocialAspectRepository socialAspectRepository;
 
     @PostMapping
     public ResponseEntity<?> createStudent(@RequestBody StudentRequest studentRequest) {
@@ -43,6 +48,44 @@ public class StudentController {
             student.setState(studentRequest.getState());
             student.setCity(studentRequest.getCity());
             student.setFinalObservations(studentRequest.getFinalObservations());
+
+            SocialAspect socialAspect = new SocialAspect();
+            socialAspect.setLivingWith(studentRequest.getSocialAspectRequest().getLivingWith());
+            socialAspect.setRelationshipWithClassmates(studentRequest.getSocialAspectRequest().getRelationshipWithClassmates());
+            socialAspect.setRelationshipWithTeachers(studentRequest.getSocialAspectRequest().getRelationshipWithTeachers());
+            socialAspect.setRelationshipWithFamily(studentRequest.getSocialAspectRequest().getRelationshipWithFamily());
+            socialAspect.setStudent(student);
+            student.setSocialAspect(socialAspect);
+
+            StudyHabit studyHabit = new StudyHabit();
+            studyHabit.setStudyMethods(studentRequest.getStudyHabitRequest().getStudyMethods());
+            studyHabit.setStudyHoursPerDay(studentRequest.getStudyHabitRequest().getStudyHoursPerDay());
+            studyHabit.setStudyLocations(studentRequest.getStudyHabitRequest().getStudyLocations());
+            studyHabit.setStudyPlan(studentRequest.getStudyHabitRequest().getStudyPlan());
+            studyHabit.setStudent(student);
+            student.setStudyHabit(studyHabit);
+
+            HealthWellbeing healthWellbeing = new HealthWellbeing();
+            healthWellbeing.setHealthCondition(studentRequest.getHealthWellbeingRequest().getHealthCondition());
+            healthWellbeing.setPhysicalActivity(studentRequest.getHealthWellbeingRequest().getPhysicalActivity());
+            healthWellbeing.setDietaryEvaluation(studentRequest.getHealthWellbeingRequest().getDietaryEvaluation());
+            healthWellbeing.setSleepHours(studentRequest.getHealthWellbeingRequest().getSleepHours());
+            healthWellbeing.setStudent(student);
+            student.setHealthWellbeing(healthWellbeing);
+
+            InterestHobby interestHobby = new InterestHobby();
+            interestHobby.setActivitiesOutsideSchool(studentRequest.getInterestHobbyRequest().getActivitiesOutsideSchool());
+            interestHobby.setDreamsGoals(studentRequest.getInterestHobbyRequest().getDreamsGoals());
+            interestHobby.setStudent(student);
+            student.setInterestHobby(interestHobby);
+
+            SelfAssessment selfAssessment = new SelfAssessment();
+            selfAssessment.setPerformanceEvaluation(studentRequest.getSelfAssessmentRequest().getPerformanceEvaluation());
+            selfAssessment.setStrengths(studentRequest.getSelfAssessmentRequest().getStrengths());
+            selfAssessment.setImprovementAreas(studentRequest.getSelfAssessmentRequest().getImprovementAreas());
+            selfAssessment.setStudent(student);
+            student.setSelfAssessment(selfAssessment);
+
             studentRepository.save(student);
 
             return new ResponseEntity<>(student, HttpStatus.CREATED);
@@ -72,45 +115,6 @@ public class StudentController {
             return new ResponseEntity<>(studentData.get(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateStudent(@PathVariable Long id, @RequestBody StudentRequest studentRequest) {
-        try {
-            Optional<Student> optionalStudent = studentRepository.findById(id);
-            if (!optionalStudent.isPresent()) {
-                return new ResponseEntity<>("Student not found", HttpStatus.NOT_FOUND);
-            }
-
-            Student student = optionalStudent.get();
-
-            Optional<User> optionalUser = userRepository.findById(student.getUser().getUserId());
-            if (!optionalUser.isPresent()) {
-                return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
-            }
-
-            User user = optionalUser.get();
-
-            user.setEmail(studentRequest.getEmail());
-            user.setPasswordHash(studentRequest.getPasswordHash());
-            user.setName(studentRequest.getName());
-            user.setDateBirth(studentRequest.getDateBirth());
-            user.setGender(studentRequest.getGender());
-            user.setDisability(studentRequest.getDisability());
-            user.setEducationLevel(studentRequest.getEducationLevel());
-            user.setInstituteName(studentRequest.getInstituteName());
-            userRepository.save(user);
-
-            student.setUser(user);
-            student.setState(studentRequest.getState());
-            student.setCity(studentRequest.getCity());
-            student.setFinalObservations(studentRequest.getFinalObservations());
-            studentRepository.save(student);
-
-            return new ResponseEntity<>(student, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 

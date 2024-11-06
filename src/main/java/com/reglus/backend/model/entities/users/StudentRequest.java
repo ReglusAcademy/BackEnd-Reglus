@@ -1,5 +1,7 @@
 package com.reglus.backend.model.entities.users;
 
+import com.reglus.backend.model.entities.users.smf.*;
+
 import java.time.LocalDate;
 
 public class StudentRequest {
@@ -14,6 +16,16 @@ public class StudentRequest {
     private String state;
     private String city;
     private String finalObservations;
+
+    private SocialAspectRequest socialAspectRequest;
+
+    private StudyHabitRequest studyHabitRequest;
+
+    private HealthWellbeingRequest healthWellbeingRequest;
+
+    private InterestHobbyRequest interestHobbyRequest;
+
+    private SelfAssessmentRequest selfAssessmentRequest;
 
     public String getEmail() {
         return email;
@@ -101,5 +113,45 @@ public class StudentRequest {
 
     public void setFinalObservations(String finalObservations) {
         this.finalObservations = finalObservations;
+    }
+
+    public SocialAspectRequest getSocialAspectRequest() {
+        return socialAspectRequest;
+    }
+
+    public void setSocialAspectRequest(SocialAspectRequest socialAspectRequest) {
+        this.socialAspectRequest = socialAspectRequest;
+    }
+
+    public StudyHabitRequest getStudyHabitRequest() {
+        return studyHabitRequest;
+    }
+
+    public void setStudyHabitRequest(StudyHabitRequest studyHabitRequest) {
+        this.studyHabitRequest = studyHabitRequest;
+    }
+
+    public HealthWellbeingRequest getHealthWellbeingRequest() {
+        return healthWellbeingRequest;
+    }
+
+    public void setHealthWellbeingRequest(HealthWellbeingRequest healthWellbeingRequest) {
+        this.healthWellbeingRequest = healthWellbeingRequest;
+    }
+
+    public InterestHobbyRequest getInterestHobbyRequest() {
+        return interestHobbyRequest;
+    }
+
+    public void setInterestHobbyRequest(InterestHobbyRequest interestHobbyRequest) {
+        this.interestHobbyRequest = interestHobbyRequest;
+    }
+
+    public SelfAssessmentRequest getSelfAssessmentRequest() {
+        return selfAssessmentRequest;
+    }
+
+    public void setSelfAssessmentRequest(SelfAssessmentRequest selfAssessmentRequest) {
+        this.selfAssessmentRequest = selfAssessmentRequest;
     }
 }

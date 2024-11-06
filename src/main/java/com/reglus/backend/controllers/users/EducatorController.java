@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/educators")
-@CrossOrigin(origins = "http://localhost:8081") // Substitua pela URL correta
+@CrossOrigin(origins = "*")
 public class EducatorController {
     @Autowired
     private UserRepository userRepository;

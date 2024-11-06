@@ -1,6 +1,7 @@
 package com.reglus.backend.model.entities.users;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.reglus.backend.model.entities.users.smf.*;
 import jakarta.persistence.*;
 
 @Entity
@@ -14,25 +15,29 @@ public class Student {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "social_id")
     @JsonManagedReference
     private SocialAspect socialAspect;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "health_id")
+    @JsonManagedReference
     private HealthWellbeing healthWellbeing;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "hobbies_id")
+    @JsonManagedReference
     private InterestHobby interestHobby;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "study_id")
+    @JsonManagedReference
     private StudyHabit studyHabit;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "assessment_id")
+    @JsonManagedReference
     private SelfAssessment selfAssessment;
 
     @Column(length = 500)

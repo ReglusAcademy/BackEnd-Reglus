@@ -1,20 +1,49 @@
-package com.reglus.backend.model.entities.users;
+package com.reglus.backend.model.entities.users.smf;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.reglus.backend.model.entities.users.Student;
+import jakarta.persistence.*;
 import com.reglus.backend.model.enums.StudyHoursPerDay;
 
-public class StudyHabitRequest {
-    private Long studentId;
+@Entity
+@Table(name = "smf_study_habits")
+public class StudyHabit {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long studyId;
+
+    @OneToOne
+    @JoinColumn(name = "student_id", nullable = false)
+    @JsonBackReference
+    private Student student;
+
+    @Column(length = 100)
     private String studyMethods;
+
+    @Enumerated(EnumType.STRING)
     private StudyHoursPerDay studyHoursPerDay;
+
+    @Column(length = 100)
     private String studyLocations;
+
+    @Column(length = 255)
     private String studyPlan;
 
     // Getters and Setters
-    public Long getStudentId() {
-        return studentId;
+    public Long getStudyId() {
+        return studyId;
     }
 
-    public void setStudentId(Long studentId) {
-        this.studentId = studentId;
+    public void setStudyId(Long studyId) {
+        this.studyId = studyId;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
     public String getStudyMethods() {

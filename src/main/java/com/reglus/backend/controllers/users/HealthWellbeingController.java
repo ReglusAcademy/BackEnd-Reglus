@@ -1,7 +1,7 @@
 package com.reglus.backend.controllers.users;
 
-import com.reglus.backend.model.entities.users.HealthWellbeing;
-import com.reglus.backend.model.entities.users.HealthWellbeingRequest;
+import com.reglus.backend.model.entities.users.smf.HealthWellbeing;
+import com.reglus.backend.model.entities.users.smf.HealthWellbeingRequest;
 import com.reglus.backend.model.entities.users.Student;
 import com.reglus.backend.repositories.HealthWellbeingRepository;
 import com.reglus.backend.repositories.StudentRepository;
@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/healthwellbeing")
+@CrossOrigin(origins = "*")
 public class HealthWellbeingController {
 
     @Autowired
@@ -23,6 +24,7 @@ public class HealthWellbeingController {
     @Autowired
     private HealthWellbeingRepository healthWellbeingRepository;
 
+    /*
     @PostMapping
     public ResponseEntity<?> createHealthWellbeing(@RequestBody HealthWellbeingRequest request) {
         try {
@@ -50,6 +52,7 @@ public class HealthWellbeingController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+    */
 
     @GetMapping
     public ResponseEntity<List<HealthWellbeing>> getAllHealthWellbeing() {

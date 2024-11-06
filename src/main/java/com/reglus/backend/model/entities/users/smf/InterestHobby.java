@@ -1,9 +1,11 @@
-package com.reglus.backend.model.entities.users;
+package com.reglus.backend.model.entities.users.smf;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.reglus.backend.model.entities.users.Student;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "interests_hobbies")
+@Table(name = "smf_interests_hobbies")
 public class InterestHobby {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,6 +13,7 @@ public class InterestHobby {
 
     @OneToOne
     @JoinColumn(name = "student_id", nullable = false)
+    @JsonBackReference
     private Student student;
 
     @Column(length = 255)

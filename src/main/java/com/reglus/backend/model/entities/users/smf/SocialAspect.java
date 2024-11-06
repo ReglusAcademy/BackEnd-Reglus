@@ -1,20 +1,49 @@
-package com.reglus.backend.model.entities.users;
+package com.reglus.backend.model.entities.users.smf;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.reglus.backend.model.entities.users.Student;
+import jakarta.persistence.*;
 import com.reglus.backend.model.enums.SocialRelationship;
 
-public class SocialAspectRequest {
-    private Long studentId;
-    private String livingWith;
+@Entity
+@Table(name = "smf_social_aspects")
+public class SocialAspect {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long socialId;
+
+    @OneToOne
+    @JoinColumn(name = "student_id", nullable = false)
+    @JsonBackReference
+    private Student student;
+
+    @Column(length = 255)
+    private String livingWith = "undefined";
+
+    @Enumerated(EnumType.STRING)
     private SocialRelationship relationshipWithClassmates;
+
+    @Enumerated(EnumType.STRING)
     private SocialRelationship relationshipWithTeachers;
+
+    @Enumerated(EnumType.STRING)
     private SocialRelationship relationshipWithFamily;
 
-    public Long getStudentId() {
-        return studentId;
+    // Getters and Setters
+    public Long getSocialId() {
+        return socialId;
     }
 
-    public void setStudentId(Long studentId) {
-        this.studentId = studentId;
+    public void setSocialId(Long socialId) {
+        this.socialId = socialId;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
     public String getLivingWith() {

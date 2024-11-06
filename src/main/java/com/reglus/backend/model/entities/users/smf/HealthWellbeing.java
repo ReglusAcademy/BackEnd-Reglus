@@ -1,11 +1,13 @@
-package com.reglus.backend.model.entities.users;
+package com.reglus.backend.model.entities.users.smf;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.reglus.backend.model.entities.users.Student;
 import com.reglus.backend.model.enums.HealthDietaryEvaluation;
 import com.reglus.backend.model.enums.HealthSleepHours;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "health_wellbeing")
+@Table(name = "smf_health_wellbeing")
 public class HealthWellbeing {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,6 +15,7 @@ public class HealthWellbeing {
 
     @OneToOne
     @JoinColumn(name = "student_id", nullable = false)
+    @JsonBackReference
     private Student student;
 
     @Column(length = 255)

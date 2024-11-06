@@ -1,10 +1,12 @@
-package com.reglus.backend.model.entities.users;
+package com.reglus.backend.model.entities.users.smf;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.reglus.backend.model.entities.users.Student;
 import jakarta.persistence.*;
 import com.reglus.backend.model.enums.SelfPerformanceEvaluation;
 
 @Entity
-@Table(name = "self_assessment")
+@Table(name = "smf_self_assessment")
 public class SelfAssessment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,6 +14,7 @@ public class SelfAssessment {
 
     @OneToOne
     @JoinColumn(name = "student_id", nullable = false)
+    @JsonBackReference
     private Student student;
 
     @Enumerated(EnumType.STRING)

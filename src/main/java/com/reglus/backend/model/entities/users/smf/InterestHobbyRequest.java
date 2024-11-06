@@ -1,19 +1,10 @@
-package com.reglus.backend.model.entities.users;
+package com.reglus.backend.model.entities.users.smf;
 
 public class InterestHobbyRequest {
-    private Long studentId;
     private String activitiesOutsideSchool;
     private String dreamsGoals;
 
     // Getters and Setters
-    public Long getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(Long studentId) {
-        this.studentId = studentId;
-    }
-
     public String getActivitiesOutsideSchool() {
         return activitiesOutsideSchool;
     }

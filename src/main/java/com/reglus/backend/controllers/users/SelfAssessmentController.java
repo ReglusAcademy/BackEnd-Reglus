@@ -1,6 +1,6 @@
 package com.reglus.backend.controllers.users;
-import com.reglus.backend.model.entities.users.SelfAssessment;
-import com.reglus.backend.model.entities.users.SelfAssessmentRequest;
+import com.reglus.backend.model.entities.users.smf.SelfAssessment;
+import com.reglus.backend.model.entities.users.smf.SelfAssessmentRequest;
 import com.reglus.backend.model.entities.users.Student;
 import com.reglus.backend.repositories.SelfAssessmentRepository;
 import com.reglus.backend.repositories.StudentRepository;
@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/self-assessments")
+@CrossOrigin(origins = "*")
 public class SelfAssessmentController {
 
     @Autowired
@@ -22,6 +23,7 @@ public class SelfAssessmentController {
     @Autowired
     private StudentRepository studentRepository;
 
+    /*
     @PostMapping
     public ResponseEntity<?> createSelfAssessment(@RequestBody SelfAssessmentRequest selfAssessmentRequest) {
         try {
@@ -46,6 +48,7 @@ public class SelfAssessmentController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+    */
 
     @GetMapping
     public ResponseEntity<List<SelfAssessment>> getAllSelfAssessments() {

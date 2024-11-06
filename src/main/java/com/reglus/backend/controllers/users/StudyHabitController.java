@@ -1,7 +1,7 @@
 package com.reglus.backend.controllers.users;
 
-import com.reglus.backend.model.entities.users.StudyHabit;
-import com.reglus.backend.model.entities.users.StudyHabitRequest;
+import com.reglus.backend.model.entities.users.smf.StudyHabit;
+import com.reglus.backend.model.entities.users.smf.StudyHabitRequest;
 import com.reglus.backend.model.entities.users.Student;
 import com.reglus.backend.repositories.StudyHabitRepository;
 import com.reglus.backend.repositories.StudentRepository;
@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/study-habits")
+@CrossOrigin(origins = "*")
 public class StudyHabitController {
 
     @Autowired
@@ -23,6 +24,7 @@ public class StudyHabitController {
     @Autowired
     private StudentRepository studentRepository;
 
+    /*
     @PostMapping
     public ResponseEntity<?> createStudyHabit(@RequestBody StudyHabitRequest studyHabitRequest) {
         try {
@@ -48,6 +50,7 @@ public class StudyHabitController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+    */
 
     @GetMapping
     public ResponseEntity<List<StudyHabit>> getAllStudyHabits() {
