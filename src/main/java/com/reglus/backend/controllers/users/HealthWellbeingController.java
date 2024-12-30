@@ -76,15 +76,28 @@ public class HealthWellbeingController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<HealthWellbeing> updateHealthWellbeing(@PathVariable("id") Long id, @RequestBody HealthWellbeing healthWellbeing) {
+    public ResponseEntity<HealthWellbeing> updateHealthWellbeing(
+            @PathVariable("id") Long id,
+            @RequestBody HealthWellbeingRequest healthWellbeingRequest) {
+
         Optional<HealthWellbeing> healthWellbeingData = healthWellbeingRepository.findById(id);
 
         if (healthWellbeingData.isPresent()) {
             HealthWellbeing existingHealthWellbeing = healthWellbeingData.get();
-            existingHealthWellbeing.setHealthCondition(healthWellbeing.getHealthCondition());
-            existingHealthWellbeing.setPhysicalActivity(healthWellbeing.getPhysicalActivity());
-            existingHealthWellbeing.setDietaryEvaluation(healthWellbeing.getDietaryEvaluation());
-            existingHealthWellbeing.setSleepHours(healthWellbeing.getSleepHours());
+
+            // Atualiza apenas os campos presentes no request
+            if (healthWellbeingRequest.getHealthCondition() != null) {
+                existingHealthWellbeing.setHealthCondition(healthWellbeingRequest.getHealthCondition());
+            }
+            if (healthWellbeingRequest.getPhysicalActivity() != null) {
+                existingHealthWellbeing.setPhysicalActivity(healthWellbeingRequest.getPhysicalActivity());
+            }
+            if (healthWellbeingRequest.getDietaryEvaluation() != null) {
+                existingHealthWellbeing.setDietaryEvaluation(healthWellbeingRequest.getDietaryEvaluation());
+            }
+            if (healthWellbeingRequest.getSleepHours() != null) {
+                existingHealthWellbeing.setSleepHours(healthWellbeingRequest.getSleepHours());
+            }
 
             HealthWellbeing updatedHealthWellbeing = healthWellbeingRepository.save(existingHealthWellbeing);
             return new ResponseEntity<>(updatedHealthWellbeing, HttpStatus.OK);
@@ -92,6 +105,7 @@ public class HealthWellbeingController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteHealthWellbeing(@PathVariable("id") Long id) {

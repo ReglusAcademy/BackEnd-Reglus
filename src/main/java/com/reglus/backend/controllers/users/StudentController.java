@@ -107,7 +107,7 @@ public class StudentController {
         }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<Student> getStudentById(@PathVariable("id") Long id) {
         Optional<Student> studentData = studentRepository.findById(id);
 
@@ -115,6 +115,17 @@ public class StudentController {
             return new ResponseEntity<>(studentData.get(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<Student> getStudentByEmail(@PathVariable("email") String email) {
+        Optional<Student> studentData = studentRepository.findByUserEmail(email);
+
+        if (studentData.isPresent()) {
+            return ResponseEntity.ok(studentData.get());
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 
