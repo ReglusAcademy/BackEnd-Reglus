@@ -24,36 +24,6 @@ public class HealthWellbeingController {
     @Autowired
     private HealthWellbeingRepository healthWellbeingRepository;
 
-    /*
-    @PostMapping
-    public ResponseEntity<?> createHealthWellbeing(@RequestBody HealthWellbeingRequest request) {
-        try {
-            Optional<Student> optionalStudent = studentRepository.findById(request.getStudentId());
-            if (!optionalStudent.isPresent()) {
-                return new ResponseEntity<>("Student not found", HttpStatus.NOT_FOUND);
-            }
-
-            Student student = optionalStudent.get();
-
-            HealthWellbeing healthWellbeing = new HealthWellbeing();
-            healthWellbeing.setStudent(student);
-            healthWellbeing.setHealthCondition(request.getHealthCondition());
-            healthWellbeing.setPhysicalActivity(request.getPhysicalActivity());
-            healthWellbeing.setDietaryEvaluation(request.getDietaryEvaluation());
-            healthWellbeing.setSleepHours(request.getSleepHours());
-            healthWellbeingRepository.save(healthWellbeing);
-
-            // Atualizar o estudante com o novo healthWellbeing
-            student.setHealthWellbeing(healthWellbeing);
-            studentRepository.save(student);  // Salva o estudante com a referência atualizada
-
-            return new ResponseEntity<>(healthWellbeing, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
-    */
-
     @GetMapping
     public ResponseEntity<List<HealthWellbeing>> getAllHealthWellbeing() {
         try {
@@ -74,7 +44,6 @@ public class HealthWellbeingController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-
     @PutMapping("/{id}")
     public ResponseEntity<HealthWellbeing> updateHealthWellbeing(
             @PathVariable("id") Long id,
@@ -85,7 +54,6 @@ public class HealthWellbeingController {
         if (healthWellbeingData.isPresent()) {
             HealthWellbeing existingHealthWellbeing = healthWellbeingData.get();
 
-            // Atualiza apenas os campos presentes no request
             if (healthWellbeingRequest.getHealthCondition() != null) {
                 existingHealthWellbeing.setHealthCondition(healthWellbeingRequest.getHealthCondition());
             }

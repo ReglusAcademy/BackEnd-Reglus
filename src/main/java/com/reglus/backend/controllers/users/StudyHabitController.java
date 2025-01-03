@@ -24,34 +24,6 @@ public class StudyHabitController {
     @Autowired
     private StudentRepository studentRepository;
 
-    /*
-    @PostMapping
-    public ResponseEntity<?> createStudyHabit(@RequestBody StudyHabitRequest studyHabitRequest) {
-        try {
-            Optional<Student> studentData = studentRepository.findById(studyHabitRequest.getStudentId());
-            if (!studentData.isPresent()) {
-                return new ResponseEntity<>("Student not found", HttpStatus.NOT_FOUND);
-            }
-            Student student = studentData.get();
-
-            StudyHabit studyHabit = new StudyHabit();
-            studyHabit.setStudent(student);
-            studyHabit.setStudyMethods(studyHabitRequest.getStudyMethods());
-            studyHabit.setStudyHoursPerDay(studyHabitRequest.getStudyHoursPerDay());
-            studyHabit.setStudyLocations(studyHabitRequest.getStudyLocations());
-            studyHabit.setStudyPlan(studyHabitRequest.getStudyPlan());
-            studyHabitRepository.save(studyHabit);
-
-            student.setStudyHabit(studyHabit); // Assuming a setStudyHabit method exists
-            studentRepository.save(student);
-
-            return new ResponseEntity<>(student, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
-    */
-
     @GetMapping
     public ResponseEntity<List<StudyHabit>> getAllStudyHabits() {
         try {
@@ -80,12 +52,21 @@ public class StudyHabitController {
 
         if (studyHabitData.isPresent()) {
             StudyHabit existingStudyHabit = studyHabitData.get();
-            existingStudyHabit.setStudyMethods(studyHabitRequest.getStudyMethods());
-            existingStudyHabit.setStudyHoursPerDay(studyHabitRequest.getStudyHoursPerDay());
-            existingStudyHabit.setStudyLocations(studyHabitRequest.getStudyLocations());
-            existingStudyHabit.setStudyPlan(studyHabitRequest.getStudyPlan());
+            if (studyHabitRequest.getStudyMethods() != null) {
+                existingStudyHabit.setStudyMethods(studyHabitRequest.getStudyMethods());
+            }
+            if (studyHabitRequest.getStudyHoursPerDay() != null) {
+                existingStudyHabit.setStudyHoursPerDay(studyHabitRequest.getStudyHoursPerDay());
+            }
+            if (studyHabitRequest.getStudyLocations() != null) {
+                existingStudyHabit.setStudyLocations(studyHabitRequest.getStudyLocations());
+            }
+            if (studyHabitRequest.getStudyPlan() != null) {
+                existingStudyHabit.setStudyPlan(studyHabitRequest.getStudyPlan());
+            }
 
             StudyHabit updatedStudyHabit = studyHabitRepository.save(existingStudyHabit);
+
             return new ResponseEntity<>(updatedStudyHabit, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

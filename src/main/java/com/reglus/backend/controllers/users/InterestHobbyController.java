@@ -23,32 +23,6 @@ public class InterestHobbyController {
     @Autowired
     private StudentRepository studentRepository;
 
-    /*
-    @PostMapping
-    public ResponseEntity<?> createInterestHobby(@RequestBody InterestHobbyRequest interestHobbyRequest) {
-        try {
-            Optional<Student> studentData = studentRepository.findById(interestHobbyRequest.getStudentId());
-            if (!studentData.isPresent()) {
-                return new ResponseEntity<>("Student not found", HttpStatus.NOT_FOUND);
-            }
-            Student student = studentData.get();
-
-            InterestHobby interestHobby = new InterestHobby();
-            interestHobby.setStudent(student);
-            interestHobby.setActivitiesOutsideSchool(interestHobbyRequest.getActivitiesOutsideSchool());
-            interestHobby.setDreamsGoals(interestHobbyRequest.getDreamsGoals());
-            interestHobbyRepository.save(interestHobby);
-
-            student.setInterestHobby(interestHobby); // Assuming a setInterestHobby method exists
-            studentRepository.save(student);
-
-            return new ResponseEntity<>(student, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
-    */
-
     @GetMapping
     public ResponseEntity<List<InterestHobby>> getAllInterestHobbies() {
         try {
@@ -77,10 +51,16 @@ public class InterestHobbyController {
 
         if (interestHobbyData.isPresent()) {
             InterestHobby existingInterestHobby = interestHobbyData.get();
-            existingInterestHobby.setActivitiesOutsideSchool(interestHobbyRequest.getActivitiesOutsideSchool());
-            existingInterestHobby.setDreamsGoals(interestHobbyRequest.getDreamsGoals());
+
+            if (interestHobbyRequest.getActivitiesOutsideSchool() != null) {
+                existingInterestHobby.setActivitiesOutsideSchool(interestHobbyRequest.getActivitiesOutsideSchool());
+            }
+            if (interestHobbyRequest.getDreamsGoals() != null) {
+                existingInterestHobby.setDreamsGoals(interestHobbyRequest.getDreamsGoals());
+            }
 
             InterestHobby updatedInterestHobby = interestHobbyRepository.save(existingInterestHobby);
+
             return new ResponseEntity<>(updatedInterestHobby, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

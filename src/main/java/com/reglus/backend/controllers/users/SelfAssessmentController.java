@@ -23,33 +23,6 @@ public class SelfAssessmentController {
     @Autowired
     private StudentRepository studentRepository;
 
-    /*
-    @PostMapping
-    public ResponseEntity<?> createSelfAssessment(@RequestBody SelfAssessmentRequest selfAssessmentRequest) {
-        try {
-            Optional<Student> studentData = studentRepository.findById(selfAssessmentRequest.getStudentId());
-            if (!studentData.isPresent()) {
-                return new ResponseEntity<>("Student not found", HttpStatus.NOT_FOUND);
-            }
-            Student student = studentData.get();
-
-            SelfAssessment selfAssessment = new SelfAssessment();
-            selfAssessment.setStudent(student);
-            selfAssessment.setPerformanceEvaluation(selfAssessmentRequest.getPerformanceEvaluation());
-            selfAssessment.setStrengths(selfAssessmentRequest.getStrengths());
-            selfAssessment.setImprovementAreas(selfAssessmentRequest.getImprovementAreas());
-            selfAssessmentRepository.save(selfAssessment);
-
-            student.setSelfAssessment(selfAssessment); // Assuming a setSelfAssessment method exists
-            studentRepository.save(student);
-
-            return new ResponseEntity<>(student, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
-    */
-
     @GetMapping
     public ResponseEntity<List<SelfAssessment>> getAllSelfAssessments() {
         try {
@@ -78,9 +51,16 @@ public class SelfAssessmentController {
 
         if (selfAssessmentData.isPresent()) {
             SelfAssessment existingSelfAssessment = selfAssessmentData.get();
-            existingSelfAssessment.setPerformanceEvaluation(selfAssessmentRequest.getPerformanceEvaluation());
-            existingSelfAssessment.setStrengths(selfAssessmentRequest.getStrengths());
-            existingSelfAssessment.setImprovementAreas(selfAssessmentRequest.getImprovementAreas());
+
+            if (selfAssessmentRequest.getPerformanceEvaluation() != null) {
+                existingSelfAssessment.setPerformanceEvaluation(selfAssessmentRequest.getPerformanceEvaluation());
+            }
+            if (selfAssessmentRequest.getStrengths() != null) {
+                existingSelfAssessment.setStrengths(selfAssessmentRequest.getStrengths());
+            }
+            if (selfAssessmentRequest.getImprovementAreas() != null) {
+                existingSelfAssessment.setImprovementAreas(selfAssessmentRequest.getImprovementAreas());
+            }
 
             SelfAssessment updatedSelfAssessment = selfAssessmentRepository.save(existingSelfAssessment);
             return new ResponseEntity<>(updatedSelfAssessment, HttpStatus.OK);

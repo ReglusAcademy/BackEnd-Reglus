@@ -23,34 +23,6 @@ public class SocialAspectController {
     @Autowired
     private StudentRepository studentRepository;
 
-    /*
-    @PostMapping
-    public ResponseEntity<?> createSocialAspect(@RequestBody SocialAspectRequest socialAspectRequest) {
-        try {
-            Optional<Student> studentData = studentRepository.findById(socialAspectRequest.getStudentId());
-            if (!studentData.isPresent()) {
-                return new ResponseEntity<>("Student not found", HttpStatus.NOT_FOUND);
-            }
-            Student student = studentData.get();
-
-            SocialAspect socialAspect = new SocialAspect();
-            socialAspect.setStudent(student);
-            socialAspect.setLivingWith(socialAspectRequest.getLivingWith());
-            socialAspect.setRelationshipWithClassmates(socialAspectRequest.getRelationshipWithClassmates());
-            socialAspect.setRelationshipWithTeachers(socialAspectRequest.getRelationshipWithTeachers());
-            socialAspect.setRelationshipWithFamily(socialAspectRequest.getRelationshipWithFamily());
-            socialAspectRepository.save(socialAspect);
-
-            student.setSocialAspect(socialAspect);
-            studentRepository.save(student);
-
-            return new ResponseEntity<>(student, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
-    */
-
     @GetMapping
     public ResponseEntity<List<SocialAspect>> getAllSocialAspects() {
         try {

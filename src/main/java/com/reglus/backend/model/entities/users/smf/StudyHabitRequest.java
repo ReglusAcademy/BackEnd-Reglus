@@ -2,6 +2,8 @@ package com.reglus.backend.model.entities.users.smf;
 import com.reglus.backend.model.enums.StudyHoursPerDay;
 
 public class StudyHabitRequest {
+
+
     private String studyMethods;
     private StudyHoursPerDay studyHoursPerDay;
     private String studyLocations;
