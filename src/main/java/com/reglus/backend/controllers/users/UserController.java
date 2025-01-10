@@ -1,8 +1,8 @@
 package com.reglus.backend.controllers.users;
 
 import com.reglus.backend.model.entities.users.User;
-import com.reglus.backend.repositories.EducatorRepository;
-import com.reglus.backend.repositories.UserRepository;
+import com.reglus.backend.repositories.users.EducatorRepository;
+import com.reglus.backend.repositories.users.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.reglus.backend.repositories;
+package com.reglus.backend.repositories.users;
 
 import com.reglus.backend.model.entities.users.smf.SelfAssessment;
 import org.springframework.data.jpa.repository.JpaRepository;

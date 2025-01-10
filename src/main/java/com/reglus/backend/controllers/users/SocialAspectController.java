@@ -2,9 +2,8 @@ package com.reglus.backend.controllers.users;
 
 import com.reglus.backend.model.entities.users.smf.SocialAspect;
 import com.reglus.backend.model.entities.users.smf.SocialAspectRequest;
-import com.reglus.backend.model.entities.users.Student;
-import com.reglus.backend.repositories.SocialAspectRepository;
-import com.reglus.backend.repositories.StudentRepository;
+import com.reglus.backend.repositories.users.SocialAspectRepository;
+import com.reglus.backend.repositories.users.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
