@@ -28,8 +28,8 @@ public class Activity {
     @Column(name = "max_points", nullable = false)
     private Integer maxPoints;
 
-    @Column(name = "due_date", nullable = false)
-    private LocalDateTime dueDate;
+    @Column(name = "data_limit", nullable = false)
+    private LocalDateTime dataLimit;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -78,12 +78,12 @@ public class Activity {
         this.maxPoints = maxPoints;
     }
 
-    public LocalDateTime getDueDate() {
-        return dueDate;
+    public LocalDateTime getDataLimit() {
+        return dataLimit;
     }
 
-    public void setDueDate(LocalDateTime dueDate) {
-        this.dueDate = dueDate;
+    public void setDataLimit(LocalDateTime dataLimit) {
+        this.dataLimit = dataLimit;
     }
 
     public LocalDateTime getCreatedAt() {
