@@ -17,14 +17,12 @@ public class StudentRequest {
     private String city;
     private String finalObservations;
 
+    private byte[] profileImage;
+
     private SocialAspectRequest socialAspectRequest;
-
     private StudyHabitRequest studyHabitRequest;
-
     private HealthWellbeingRequest healthWellbeingRequest;
-
     private InterestHobbyRequest interestHobbyRequest;
-
     private SelfAssessmentRequest selfAssessmentRequest;
 
     public String getEmail() {
@@ -113,6 +111,14 @@ public class StudentRequest {
 
     public void setFinalObservations(String finalObservations) {
         this.finalObservations = finalObservations;
+    }
+
+    public byte[] getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(byte[] profileImage) {
+        this.profileImage = profileImage;
     }
 
     public SocialAspectRequest getSocialAspectRequest() {
