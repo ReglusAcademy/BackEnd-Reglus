@@ -1,5 +1,6 @@
 package com.reglus.backend.controllers.users;
 
+import com.reglus.backend.dto.UserDTO;
 import com.reglus.backend.model.entities.users.User;
 import com.reglus.backend.model.entities.users.login.LoginRequest;
 import com.reglus.backend.repositories.users.UserRepository;
@@ -13,7 +14,7 @@ import java.util.Map;
 import java.util.Optional;
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "*")// Substitua pela URL correta
+@CrossOrigin(origins = "*")
 public class AuthController {
 
     @Autowired
@@ -21,18 +22,14 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        // Busca o usuário pelo e-mail
         Optional<User> userOptional = userRepository.findByEmail(loginRequest.getEmail());
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            // Valida a senha diretamente
             if (loginRequest.getPassword().equals(user.getPasswordHash())) {
-                // Crie um Map para retornar o tipo de usuário e outros dados
                 Map<String, Object> response = new HashMap<>();
-                response.put("user", user); // Inclui o objeto de usuário completo
-                response.put("user_type", user.getUserType()); // Presumindo que o campo userType existe no modelo User
+                response.put("user", new UserDTO(user));
+                response.put("user_type", user.getUserType());
 
-                // Retorna sucesso com detalhes do usuário
                 return ResponseEntity.ok(response);
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Senha incorreta.");
