@@ -10,6 +10,7 @@ import com.reglus.backend.repositories.users.EducatorRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -30,22 +31,35 @@ public class ActivityController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createActivity(@RequestBody ActivityRequest request) {
+    public ResponseEntity<?> createActivity(
+            @RequestParam("title") String title,
+            @RequestParam("description") String description,
+            @RequestParam("roomId") Long roomId,
+            @RequestParam("educatorId") Long educatorId,
+            @RequestParam("maxPoints") Integer maxPoints,
+            @RequestParam("dataLimit") LocalDateTime dataLimit,
+            @RequestParam(value = "fileData", required = false) MultipartFile fileData) {
         try {
-            Room room = roomRepository.findById(request.getRoomId())
-                    .orElseThrow(() -> new RuntimeException("Room not found with ID: " + request.getRoomId()));
+            Room room = roomRepository.findById(roomId)
+                    .orElseThrow(() -> new RuntimeException("Room not found with ID: " + roomId));
 
-            Educator educator = educatorRepository.findById(request.getEducatorId())
-                    .orElseThrow(() -> new RuntimeException("Educator not found with ID: " + request.getEducatorId()));
+            Educator educator = educatorRepository.findById(educatorId)
+                    .orElseThrow(() -> new RuntimeException("Educator not found with ID: " + educatorId));
 
             Activity activity = new Activity();
             activity.setRoom(room);
             activity.setEducator(educator);
-            activity.setTitle(request.getTitle());
-            activity.setMaxPoints(request.getMaxPoints());
-            activity.setDataLimit(request.getDataLimit());
+            activity.setTitle(title);
+            activity.setDescription(description);
+            activity.setMaxPoints(maxPoints);
+            activity.setDataLimit(dataLimit);
             activity.setCreatedAt(LocalDateTime.now());
             activity.setUpdatedAt(LocalDateTime.now());
+
+            // Salvar o arquivo se existir
+            if (fileData != null && !fileData.isEmpty()) {
+                activity.setFileData(fileData.getBytes());
+            }
 
             Activity savedActivity = activityRepository.save(activity);
 

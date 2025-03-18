@@ -107,6 +107,47 @@ public class StudentController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateStudent(@PathVariable("id") Long id, @RequestBody StudentRequest studentRequest) {
+        try {
+            Optional<Student> studentData = studentRepository.findById(id);
+
+            if (studentData.isPresent()) {
+                Student student = studentData.get();
+
+                Optional<User> optionalUser = userRepository.findById(student.getUser().getUserId());
+                if (!optionalUser.isPresent()) {
+                    return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+                }
+
+                User user = optionalUser.get();
+
+                user.setEmail(studentRequest.getEmail());
+                user.setPasswordHash(studentRequest.getPasswordHash());
+                user.setName(studentRequest.getName());
+                user.setDateBirth(studentRequest.getDateBirth());
+                user.setGender(studentRequest.getGender());
+                user.setDisability(studentRequest.getDisability());
+                user.setEducationLevel(studentRequest.getEducationLevel());
+                user.setInstituteName(studentRequest.getInstituteName());
+                userRepository.save(user);
+
+                student.setUser(user);
+                student.setFinalObservations(studentRequest.getFinalObservations());
+                student.setState(studentRequest.getState());
+                student.setCity(studentRequest.getCity());
+                studentRepository.save(student);
+
+                return new ResponseEntity<>(student, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Student not found", HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
     @GetMapping("/id/{id}")
     public ResponseEntity<Student> getStudentById(@PathVariable("id") Long id) {
         Optional<Student> studentData = studentRepository.findById(id);

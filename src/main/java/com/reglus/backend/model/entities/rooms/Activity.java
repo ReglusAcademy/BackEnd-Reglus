@@ -25,6 +25,13 @@ public class Activity {
     @Column(name = "title", nullable = false, length = 255)
     private String title;
 
+    @Column(name = "description", nullable = false, length = 1000)
+    private String description;
+
+    @Lob
+    @Column(name = "file_data", columnDefinition = "LONGBLOB")
+    private byte[] fileData;
+
     @Column(name = "max_points", nullable = false)
     private Integer maxPoints;
 
@@ -68,6 +75,22 @@ public class Activity {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public byte[] getFileData() {
+        return fileData;
+    }
+
+    public void setFileData(byte[] fileData) {
+        this.fileData = fileData;
     }
 
     public Integer getMaxPoints() {

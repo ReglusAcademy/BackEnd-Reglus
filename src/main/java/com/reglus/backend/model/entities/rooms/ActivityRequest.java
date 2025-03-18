@@ -6,6 +6,8 @@ public class ActivityRequest {
     private Long roomId;
     private Long educatorId;
     private String title;
+    private String description;
+    private byte[] fileData;
     private Integer maxPoints;
     private LocalDateTime dataLimit;
 
@@ -31,6 +33,18 @@ public class ActivityRequest {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDescription() { return description; }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public byte[] getFileData() { return fileData; }
+
+    public void setFileData(byte[] fileData) {
+        this.fileData = fileData;
     }
 
     public Integer getMaxPoints() {
