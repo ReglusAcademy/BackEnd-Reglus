@@ -17,7 +17,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/activities")
-@CrossOrigin(origins = "*")
 public class ActivityController {
 
     private final ActivityRepository activityRepository;
